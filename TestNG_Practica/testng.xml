@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-
 <suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="D:/Test_Capacitacion/Rest Assured/TestNG_Practica">
-
+    <test name="annotationdemo">
         <classes>
-
-            <class name="TC001_TestNG"/>
-            <class name="TC002_TestNG"/>
-
+            <class name="Prueba01">
+                <methods>
+                    <include name="test1"/>
+                    <include name="test2"/>
+                </methods>
+            </class>
+            <class name="Prueba02">
+                <methods>
+                    <include name="test3"/>
+                    <include name="test4"/>
+                </methods>
+            </class>
         </classes>
-
-
     </test>
 </suite>

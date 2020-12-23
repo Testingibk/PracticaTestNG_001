@@ -93,5 +93,306 @@ Para utilizar el archivo testng-failed.xml
    que se tiene el error. Para que desaparezca el error tenemos que volver a ejecutar desde testng.xml
  - Nuevamente volvemos a abrir el archivo emailable-report vamos a ver que todas las pruebas pasaron.
 
- 
- 
+ 3. TC003_TestNG
+===============
+Objetivo:
+========
+Uso de TestNG Annotations
+Podemos controlar la secuencia y prioridad de los metodos que Java permite ejecutar "Antes" y "Despues" en un punto
+Se utlizan el simbolo "@"
+
+Secuencia de ejecución de las ANOTACIONES
+@BeforeSuite			@AfterSuite
+  @BeforeTest		      @AfterTest
+    @BeforeClass            @AfterClass
+      @BeforeMethod       @AfterMethod
+                    @Test
+
+ - Vamos a crear Test para esta funcionalidad
+ - En la carpeta "src" crear nuevas clases para los test (Prueba01, etc.)
+ - Dentro de la clase Prueba01 vamos creando los métodos y las anotaciones @Test
+ - Ejecutamos para ver que se ejecutan con éxito
+ - Ahora sobre lo creado creamos un @BeforeMethod
+
+    @BeforeMethod
+    void beforeMethod()
+    {System.out.print("This will execute before every method");}
+
+   @Test
+    void test1()
+    {System.out.print("This is test1...");}
+
+    @Test
+    void test2()
+    {System.out.print("This is test2");}
+
+ - Entonces lo que se tiene es que BeforeMethod se va a ejecutar antes de cada método
+
+Resultado:
+This will execute before every method
+This is test1...
+
+This will execute before every method
+This is test2
+
+ - Ahora agregamos @afterMethod
+    @BeforeMethod
+    void beforeMethod()
+    {System.out.print("This will execute before every method");}
+
+    @AfterMethod
+    void afterMethod()
+    {System.out.println("This will execute after every method");}
+
+    @Test
+    void test1()
+    {System.out.print("This is test1...");}
+
+    @Test
+    void test2()
+    {System.out.print("This is test2");}
+
+RESULTADO
+This will execute before every method
+This is test1...
+This will execute after every method
+
+This will execute before every method
+This is test2
+This will execute after every method
+
+ - Ahora agregamos @beforeClass() y  AfterClass()
+    @BeforeClass
+    void beforeClass()
+    {System.out.println("This will execute before the class");}
+
+    @AfterClass
+    void afterClass()
+    {System.out.println("This will execute after the class");}
+
+    @BeforeMethod
+    void beforeMethod()
+    {System.out.print("This will execute before every method");}
+
+    @AfterMethod
+    void afterMethod()
+    {System.out.println("This will execute after every method");}
+
+    @Test
+    void test1()
+    {System.out.print("This is test1...");}
+
+    @Test
+    void test2()
+    {System.out.print("This is test2");}
+
+RESULTADO
+This will execute before the class
+
+This will execute before every method
+This is test1...
+This will execute after every method
+
+This will execute before every method
+This is test2
+This will execute after every method
+
+This will execute after the class
+
+ - Ahora agregamos @BeforeTest y @AfterTest
+ - Creamos otra clase Prueba02 que incluya los test3 y test4
+ - Para hacer esto creamos otro archivo XML
+ - Seleccionamos las clases Prueba01 y Prueba02 y hacemos click derecho
+ - Click sobre Create testNG XML
+ - Luego Code/Reformat Code y dejar solo el tag <suite></suite>
+
+ - Creamos lo siguiente en el orden siguiente:
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test name="annotationdemo">
+        <classes>
+            <class name="Prueba01">
+                <methods>
+                    <include name="test1"/>
+                    <include name="test2"/>
+                </methods>
+            </class>
+            <class name="Prueba02">
+                <methods>
+                    <include name="test3"/>
+                    <include name="test4"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+
+ - Ejecutamos desde el archivo testng.xml
+
+RESULTADO
+This will execute before the class
+
+This will execute before every method
+This is test1...
+This will execute after every method
+
+This will execute before every method
+This is test2
+This will execute after every method
+
+This will execute after the class
+_____________________________________________
+
+This will execute before the class
+
+This will execute before every method
+This is test3...
+This will execute after every method
+
+This will execute before every method
+This is test4
+This will execute after every method
+
+This will execute after the class
+
+ - Agregamos @BeforeTest y AfterTest
+    @BeforeClass
+    void beforeClass()
+    {System.out.println("This will execute before the class");}
+
+    @AfterClass
+    void afterClass()
+    {System.out.println("This will execute after the class");}
+
+    @BeforeMethod
+    void beforeMethod()
+    {System.out.print("This will execute before every method");}
+
+    @AfterMethod
+    void afterMethod()
+    {System.out.println("This will execute after every method");}
+
+    @Test
+    void test1()
+    {System.out.print("This is test1...");}
+
+    @Test
+    void test2()
+    {System.out.print("This is test2");}
+
+    @BeforeTest
+    void beforeTest()
+    {System.out.println("This will execute before the test");}
+    @AfterTest
+    void afterTest()
+    {System.out.println("This will execute after the test");}
+
+RESULTADO
+This will execute before the test	<<<==============
+
+This will execute before the class
+
+This will execute before every method
+This is test1...
+This will execute after every method
+
+This will execute before every method
+This is test2
+This will execute after every method
+
+
+This will execute after the class
+
+=========================================
+
+This will execute before the class
+
+This will execute before every method
+This is test3...
+This will execute after every method
+
+This will execute before every method
+This is test4
+This will execute after every method
+
+This will execute after the class
+
+
+This will execute after the test	<<<==============
+
+ - Agregamos @BeforeSuite y AfterSuite en la clase Prueba02
+
+    @BeforeClass
+    void beforeClass()
+    {System.out.println("This will execute before the class");}
+
+    @AfterClass
+    void afterClass()
+    {System.out.println("This will execute after the class");}
+
+    @BeforeMethod
+    void beforeMethod()
+    {System.out.print("This will execute before every method");}
+
+    @AfterMethod
+    void afterMethod()
+    {System.out.println("This will execute after every method");}
+
+    @Test
+    void test3()
+    {System.out.print("This is test3...");}
+
+    @Test
+    void test4()
+    {System.out.print("This is test4");}
+
+    @BeforeSuite
+    void beforeSuite()
+    {System.out.println("This will execute before every suite");}
+    @AfterSuite
+    void afterSuite()
+    {System.out.println("This will execute after every suite");}
+
+RESULTADO
+This will execute before every suite	<<<<<<<<<<
+
+This will execute before the test
+
+This will execute before the class
+
+This will execute before every method
+This is test1...
+This will execute after every method
+
+This will execute before every method
+This is test2
+This will execute after every method
+
+
+This will execute after the class
+
+=========================================
+
+This will execute before the class
+
+
+This will execute before every method
+This is test3...
+This will execute after every method
+
+This will execute before every method
+This is test4
+This will execute after every method
+
+This will execute after the class
+
+
+This will execute after the test
+
+
+This will execute after every suite	<<<<<<<<<<
+
+
+
+
