@@ -396,3 +396,40 @@ This will execute after every suite	<<<<<<<<<<
 
 
 
+4. TC004_TestNG
+===============
+Objetivo
+Priorización de Tests
+Disabling tests
+
+ - Creamos una nueva clase a la que llamaremos TC004_TestNG
+ - Dentro creamos 4 métodos y lo ejecutamos y veremos que se ejecutan en este orden
+	This es Test_04
+	This is Test_01
+	This is Test_03
+	This is Test_02
+ - Se ejecutaron en orden alfabetico
+ - Si queremos evitar esto debemos priorizar el orden de ejecución de cada método
+ 	    @Test(priority = 0)
+    		void TestOne() {
+        	System.out.println("This is Test_01");
+ - Ejecutamos
+	This is Test_01
+	This is Test_02
+	This is Test_03
+	This is Test_04
+
+ - Si queremos enabled una de los metodos hacemos lo siguiente:
+ -     @Test(priority = 3,enabled = false)
+    	void TestFour() {
+        System.out.println("This is Test_04");
+ - Vemos que al agregar el parametro enabled=false (no aparece el icono verde en la barra izquierda)
+ - Ejecutamos la clase con COVERAGE
+ - Podemos ver que el metodo 4 no se ha ejecutado
+
+
+
+
+
+
+
