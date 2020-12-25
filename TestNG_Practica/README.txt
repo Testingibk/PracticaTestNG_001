@@ -495,6 +495,147 @@ EJECUTAMOS
 
 
 
+6. TC006_TestNG
+===============
+Objetivo
+========
+Grupos de tests
+
+- Creamos un grupo de tests (test1,....,test7)
+	@Test(groups = {"sanity"})
+    	void test1()
+    	{System.out.println("This is test1");}
+
+- Ejecutamos
+RESULTADO
+This is test1
+This is test2
+This is test3
+This is test4
+This is test5
+This is test6
+This is test7
+
+- Ahora agrupamos los tests con la funcionalidad @Test(groups = {"sanity"})
+	@Test(groups = {"sanity"})
+    	void test1()
+    	{System.out.println("This is test1");}
+- También se puede en un testCase que pertenezca a dos o tres grupos
+
+EJECUTAMOS:
+This is test1...
+This is test2...
+This is test3...
+This is test4...
+This is test5...
+This is test6...
+This is test7...
+This is test8...
+
+- Para ejecutar los grupos de test se debe crear el archivo testng.xml
+- Nos ubicamos en la clase que tiene nuestros testCases 
+- Click derecho y buscamos Create TestNG XML
+- Damos Ok  -  Code/Reformat Code
+	<suite name="All Test Suite">
+	    <test name="groupingtest">
+        	<classes>
+            		<class name="TC006_TestNG"/>  <--- Nombre de la clase que contiene los test
+        	</classes>
+    	    </test>
+	</suite>
+- Agregamos los grupos que hemos creado en la clase TC006_TestNG
+
+<suite name="All Test Suite">
+    <test name="groupingtest">
+
+        <groups>
+            <run>
+                <include name="sanity"/>    <--- Nombre del grupo que contiene los tests
+            </run>
+        </groups>
+
+        <classes>
+            <class name="TC006_TestNG"/>
+        </classes>
+    </test>
+</suite>
+
+EJECUTAMOS
+This is test1...
+This is test2...
+This is test5...
+This is test8...
+
+- Podemos ejecutar otro grupo de tests
+	<include name="regression"/>
+
+- Podemos ejecutar dos grupos o más a la vez
+	<include name="sanity"/>
+	<include name="regression"/>
+- Podemos excluir un grupo de tests
+	<exclude name="sanity"/>
+RESULTADO
+This is test3...
+This is test4...
+This is test6...
+This is test7...
+Se ejecutan todos menos los que tienen el nombre de "sanity"
+
+- Podemos combinar include y exclude
+	<exclude name="sanity"/>
+	<include name="possitive"/>
+
+RESULTADO
+This is test6...
+This is test7...
+
+ 
+
+7. TC007_TestNG
+===============
+Objetivo
+========
+Assertions in TestNG
+- Assert.assertTrue() & Assert.assertFalse()
+- Assert.assertEqual()
+
+
+
+
+
+
+
+
+8. TC008_TestNG
+===============
+Objetivo
+========
+
+
+
+
+
+9. TC009_TestNG
+===============
+Objetivo
+========
+
+
+
+
+10. TC0010_TestNG
+===============
+Objetivo
+========
+
+
+
+
+11. TC0011_TestNG
+===============
+Objetivo
+========
+
 
 
 
