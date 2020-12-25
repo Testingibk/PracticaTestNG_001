@@ -427,6 +427,72 @@ Disabling tests
  - Ejecutamos la clase con COVERAGE
  - Podemos ver que el metodo 4 no se ha ejecutado
 
+5. TC005_TestNG
+===============
+Objetivo
+========
+Dependency Tests in TestNG
+AlwaysRun property
+
+ - Creamos la clase TC005_TestNG
+ - Creamos los métodos: startCar, driveCar, stopCar, parkCar
+ - En la ejecución vemos que para conducir primero tenemos que arrancar el carro, también si quieres
+   detener el carro se tiene que conducir o avanzar el carro.
+ - Para agregar que una clase dependa de otra agregamos el parametro >>> dependsOnMethods = {"nombreDelMetodo} <<<
+ - El código queda asi:
+    @Test
+    void startCar()
+    {System.out.print("Car started");}
+
+    @Test(dependsOnMethods = {"startCar"})
+    void driveCar()
+    {System.out.print("Car driving");}
+
+    @Test(dependsOnMethods = {"driveCar"})
+    void stopCar()
+    {System.out.print("Car stopped");}
+
+    @Test(dependsOnMethods = {"driveCar", "stopCar"})
+    void parkCar()
+    {System.out.print("Car parked");}
+
+RESULTADO:
+Car started
+Car driving
+Car stopped
+Car parked
+
+ - Agregamos un Assert.fail para el método con el que inicia la clase
+ - Como se tiene una dependencia en cascada fallaría el resto
+    @Test
+    void startCar()
+    {System.out.print("Car started");
+        Assert.fail();}
+
+RESULTADO
+Car started
+java.lang.AssertionError: null
+Test ignored.
+Test ignored.
+Test ignored.
+
+ - Se verifica que falla el resto
+
+ - Pero si queremos que de todas maneras se ejecute el ultimo test entonces usamos
+   >>> alwaysRun = true <<<
+
+	 @Test(dependsOnMethods = {"driveCar", "stopCar"}, alwaysRun = true)
+    	 void parkCar()
+
+EJECUTAMOS
+ Car started
+ java.lang.AssertionError: null
+ Test ignored.
+ Test ignored.
+ Car parked
+
+ - Se verifica que aunque falló el primer caso, con alwaysRun se ejecute aunque falle la dependencia.
+
 
 
 
